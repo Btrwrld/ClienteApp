@@ -69,7 +69,7 @@ public class MenuPlatillos extends AppCompatActivity {
                     Intent intent = new Intent(MenuPlatillos.this, MenuPrincipal.class);
                     //Implementar pedido de la orden o
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RegistrarInv.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MenuPlatillos.this);
                     builder.setTitle("¡Listo!");
                     builder.setMessage("Se ha realizado el pedido");
                     builder.setPositiveButton("OK",null);
@@ -79,7 +79,7 @@ public class MenuPlatillos extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-                AlertDialog.Builder builder = new AlertDialog.Builder(RegistrarInv.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MenuPlatillos.this);
                 builder.setTitle("¡Atención!");
                 builder.setMessage("Seleccione un platillo");
                 builder.setPositiveButton("OK",null);

@@ -56,7 +56,7 @@
         android:textSize="15dp"/>
 
     <TextView
-        android:text="Datos Extra"
+        android:text="Información Extra"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/datosCompInfor"
