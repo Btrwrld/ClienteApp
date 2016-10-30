@@ -31,7 +31,7 @@
         <activity android:name=".MenuPlatillos" />
         <activity android:name=".VistaPlatillo" />
         <activity android:name=".Calificar" />
-        <activity android:name=".Pago"></activity>
+        <activity android:name=".Pago" />
     </application>
 
 </manifest>
