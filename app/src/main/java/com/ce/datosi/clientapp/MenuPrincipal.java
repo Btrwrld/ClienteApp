@@ -66,7 +66,7 @@ public class MenuPrincipal extends AppCompatActivity {
         barraProgreso.setProgressBar((ProgressBar)(findViewById(R.id.pbProgresoOrden)));
         barraProgreso.run();
 
-        FloatingActionButton ordenar = (FloatingActionButton)(findViewById(R.id.btnordenar));
+        Button ordenar = (Button)(findViewById(R.id.btnordenar));
 
         ordenar.setOnClickListener(new View.OnClickListener() {
             @Override

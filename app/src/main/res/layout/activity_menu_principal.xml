@@ -12,7 +12,7 @@
     tools:context="com.ce.datosi.clientapp.MenuPrincipal">
 
     <ProgressBar
-        style="@android:style/Widget.Material.Light.ProgressBar.Large"
+        style="@android:style/Widget.Holo.ProgressBar.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -58,19 +58,7 @@
         android:layout_alignBaseline="@+id/txtprogresoOrden"
         android:layout_alignBottom="@+id/txtprogresoOrden"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/linearLayout" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:fabSize="normal"
-        app:srcCompat="@android:drawable/ic_input_add"
-        android:id="@+id/btnordenar"
-        app:backgroundTint="@android:color/holo_blue_bright"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="14dp" />
+        android:layout_toEndOf="@+id/LinearLayout" />
 
     <Button
         android:text="Enviar"
@@ -88,83 +76,83 @@
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/btncalificar"
         android:layout_alignBottom="@+id/btnenviar"
-        android:layout_below="@+id/btnordenar">
+        android:layout_below="@+id/btnordenar"
+        android:id="@+id/LinearLayout">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/msj11"
-            android:textAppearance="@android:style/TextAppearance.Material.Menu"
-            android:textSize="18sp" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/msj10"
-            android:textAppearance="@android:style/TextAppearance.Material.Menu"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/msj9"
-            android:textAppearance="@android:style/TextAppearance.Material.Menu"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/msj8"
-            android:textAppearance="@android:style/TextAppearance.Material.Menu"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/msj7"
-            android:textAppearance="@android:style/TextAppearance.Material.Menu"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/msj6"
-            android:textAppearance="@android:style/TextAppearance.Material.Menu"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/msj5"
-            android:textAppearance="@android:style/TextAppearance.Material.Menu"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/msj4"
-            android:textAppearance="@android:style/TextAppearance.Material.Menu"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/msj3"
-            android:textAppearance="@android:style/TextAppearance.Material.Menu"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/msj2"
-            android:textAppearance="@android:style/TextAppearance.Material.Menu"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/msj1"
-            android:textAppearance="@android:style/TextAppearance.Material.Menu"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp" />
 
         <EditText
@@ -176,16 +164,6 @@
             android:imeOptions="actionDone"
             android:hint="Sea parte del chat aqui" />
     </LinearLayout>
-
-    <Button
-        android:text="Calificar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btncalificar"
-        android:layout_below="@+id/btnordenar"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="77dp"
-        android:layout_alignStart="@+id/btnpagar" />
 
     <TextView
         android:text="Usuario"
@@ -203,6 +181,25 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnpagar"
         android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/LinearLayout" />
+
+    <Button
+        android:text="Menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnordenar"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Calificar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btncalificar"
+        android:layout_marginBottom="15dp"
+        android:layout_above="@+id/btnpagar"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/btnordenar" />
 
 </RelativeLayout>
