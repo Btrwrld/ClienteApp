@@ -70,19 +70,19 @@
         android:weightSum="1">
 
         <Button
-            android:text="Ordenar"
+            android:text="Regresar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ordenar"
+            android:id="@+id/regresar"
             android:layout_marginStart="50dp"
             android:layout_weight="0.30" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Regresar"
+            android:text="Ordenar"
             android:layout_weight="0.30"
-            android:id="@+id/regresar" />
+            android:id="@+id/ordenar" />
 
     </LinearLayout>
 

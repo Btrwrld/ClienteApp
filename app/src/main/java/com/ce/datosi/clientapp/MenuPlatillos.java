@@ -12,6 +12,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+
+import Comunicacion.Contenedor;
+import Menu.Platillo;
+
 public class MenuPlatillos extends AppCompatActivity {
 
     int indice;
@@ -21,17 +26,19 @@ public class MenuPlatillos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_platillos);
 
+
+        final LinkedList<Platillo> listaPlatillos = Contenedor.getPlatillos();
         final String[] platillos = new String[listaPlatillos.size()];
 
         // si no funciona, se cambia el tamaño de la lista a uno por default por ejemplo 30
         //se crea un for que itere sobre el array y agregue todos los campos de string vacio
         //suposicion de que existe una lista de platillos tipo LinkedList Java
         for(int i = 0; i < listaPlatillos.size(); i++){
-            platillos[i] = listaPlatillos.get(i).nombre();
+            platillos[i] = listaPlatillos.get(i).getNombre();
         }
 
         ListView platillosList = (ListView)findViewById(R.id.lvplatillos);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, platillos);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, platillos);
         platillosList.setAdapter(adapter);
 
         final TextView calorias = (TextView)findViewById(R.id.nutriInfor);
@@ -48,10 +55,10 @@ public class MenuPlatillos extends AppCompatActivity {
 
                 //modificación de los texview para que muestren la información del platillo seleccionado
                 indice = posicion;
-                calorias.setText(listaPlatillos.get(indice).informacionNutricional());
-                tiempo.setText(listaPlatillos.get(indice).tiempoDePreparacion());
-                precio.setText(listaPlatillos.get(indice).precio());
-                datosComp.setText(listaPlatillos.get(indice).datoExtra());
+                calorias.setText(listaPlatillos.get(indice).getInformacionNutricional());
+                tiempo.setText(listaPlatillos.get(indice).getTiempoDePreparacion());
+                precio.setText(listaPlatillos.get(indice).getPrecio());
+                datosComp.setText(listaPlatillos.get(indice).getDatoExtra());
             }
         });
 
