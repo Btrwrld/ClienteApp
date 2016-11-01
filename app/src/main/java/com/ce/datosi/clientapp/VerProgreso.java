@@ -40,8 +40,10 @@ public class VerProgreso extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             int mProgressStatus = 0;
-            double numPasos = Contenedor.getPasos().size();
-            double numPasosActuales = Contenedor.getPasos().size();
+            //double numPasos = Contenedor.getPasos().size();
+            //double numPasosActuales = Contenedor.getPasos().size();
+            double numPasos = 8;
+            double numPasosActuales = 8;
 
             if (numPasos == 0){
                 isCancelled();
@@ -54,7 +56,8 @@ public class VerProgreso extends AppCompatActivity {
                 tareaLarga();
                 publishProgress(mProgressStatus);
 
-                numPasosActuales = Contenedor.getPasos().size();
+                --numPasosActuales;
+                //umPasosActuales = Contenedor.getPasos().size();
 
             }
             return true;
