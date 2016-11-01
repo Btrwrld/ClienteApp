@@ -2,6 +2,7 @@ package Menu;
 
 import java.util.LinkedList;
 
+import Restaurante.Restaurante;
 import Usuario.Cliente;
 
 public class Orden{
@@ -10,6 +11,7 @@ public class Orden{
 	private Platillo platillo = new Platillo();
 	private Integer monto;
 	private String estado;
+	public Restaurante sede;
 	private boolean ordenTerminada = false;
 	private LinkedList<Pasos> listaPasos;
 

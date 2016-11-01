@@ -7,6 +7,7 @@ import android.speech.RecognizerIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
@@ -16,12 +17,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 import Comunicacion.Comunicador;
 import Comunicacion.Contenedor;
@@ -41,6 +53,8 @@ public class MenuPrincipal extends AppCompatActivity {
     private Button pagar;
     private Button calificar;
     private Button ordenar;
+
+    public static Contenedor contenedor;
 
 
 
@@ -183,11 +197,36 @@ public class MenuPrincipal extends AppCompatActivity {
     }
 
     private LinkedList<Platillo> reconocerPlatillo(String entradaVoz) {
-        LinkedList<Platillo> listaPlatillos = Contenedor.getPlatillos();
-        Platillo p1 = new Platillo();
-        p1.setNombre("Hamburguesa");
-        listaPlatillos.addFirst(p1);
+
+        final String url = "http://192.168.100.22:8080/WebServer/rest/MainCliente/getMenu";
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        StringRequest get = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                GsonBuilder builder = new GsonBuilder();
+                Gson gson = builder.create();
+                contenedor = gson.fromJson(response, Contenedor.class);
+
+            }
+        }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //This code is executed if there is an error.
+            }
+        }) {
+            protected Map<String, String> getParams() {
+                Map<String, String> MyData = new HashMap<String, String>();
+                MyData.put("Field", "Value"); //Add the data you'd like to send to the server.
+                return MyData;
+            }
+        };
+        // add it to the RequestQueue
+        queue.add(get);
+
+        LinkedList<Platillo> listaPlatillos = contenedor.getListaPlatillos();
         LinkedList<Platillo> platillosPedidos = new LinkedList<>();
+
         String[] palabra = entradaVoz.split(" ");
         for (int i = 0; i < listaPlatillos.size(); i++) {
             for (int j = 0; j < palabra.length; j++) {

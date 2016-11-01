@@ -49,13 +49,6 @@
         android:layout_weight="0.10"
         android:textAppearance="@android:style/TextAppearance.Widget.TextView" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/resultado"
-        android:layout_weight="0.10"
-        android:textAppearance="@android:style/TextAppearance.Widget.TextView" />
-
     <Button
         android:id="@+id/btnEscanear"
         android:layout_width="match_parent"

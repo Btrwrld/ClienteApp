@@ -12,6 +12,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.LinkedList;
 
 import Comunicacion.Comunicador;
@@ -123,9 +126,13 @@ public class VistaChat extends AppCompatActivity {
 
     private class EnviarMensaje extends AsyncTask<String, Void, Boolean> {
 
-
         @Override
         protected Boolean doInBackground(String... params) {
+
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+            String datosAEnviar = gson.toJson(params[0]);
+
             if (Comunicador.verificarConexion(getApplicationContext())){
                 //Comunicador.POST();
                 return true;

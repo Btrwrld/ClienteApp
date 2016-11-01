@@ -1,6 +1,7 @@
 package com.ce.datosi.clientapp;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +14,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.LinkedList;
+
+import Comunicacion.Comunicador;
 
 public class Pago extends AppCompatActivity {
 
@@ -82,6 +88,97 @@ public class Pago extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    private class EnviarPago extends AsyncTask<LinkedList<Object>, Void, Boolean> {
+
+
+        @Override
+        protected Boolean doInBackground(LinkedList<Object>... params) {
+            boolean retorno;
+
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+            String comentario = gson.toJson(params[0].getFirst());
+            String calificacion = gson.toJson(params[0].getLast());
+
+            if (Comunicador.verificarConexion(getApplicationContext())) {
+                //Comunicador.POST();   MENSAJE
+                //Comunicador.POST();   CALIFICACION
+                retorno = true;}
+            else {
+                isCancelled();
+                retorno = false;
+            }
+            return retorno;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (result)
+                Toast.makeText(Pago.this, "Datos enviados!",
+                        Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected void onCancelled() {
+            Toast.makeText(Pago.this, "No hay conexion!",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private class ObtenerDeuda extends AsyncTask<Void, Void, Boolean> {
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            boolean retorno;
+
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+
+
+            if (Comunicador.verificarConexion(getApplicationContext())) {
+                //Comunicador.POST();   MENSAJE
+                //Comunicador.POST();   CALIFICACION
+                retorno = true;}
+            else {
+                isCancelled();
+                retorno = false;
+            }
+            return retorno;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (result)
+                Toast.makeText(Pago.this, "Datos enviados!",
+                        Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected void onCancelled() {
+            Toast.makeText(Pago.this, "No hay conexion!",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

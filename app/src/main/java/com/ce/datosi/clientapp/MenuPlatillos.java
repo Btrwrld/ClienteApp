@@ -5,12 +5,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 import java.util.LinkedList;
 
@@ -27,7 +37,7 @@ public class MenuPlatillos extends AppCompatActivity {
         setContentView(R.layout.activity_menu_platillos);
 
 
-        final LinkedList<Platillo> listaPlatillos = Contenedor.getPlatillos();
+        final LinkedList<Platillo> listaPlatillos = new LinkedList<Platillo>() ;
         final String[] platillos = new String[listaPlatillos.size()];
 
         // si no funciona, se cambia el tamaño de la lista a uno por default por ejemplo 30
@@ -38,6 +48,35 @@ public class MenuPlatillos extends AppCompatActivity {
         }
 
         ListView platillosList = (ListView)findViewById(R.id.lvplatillos);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, platillos);
         platillosList.setAdapter(adapter);
 

@@ -8,18 +8,38 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import Comunicacion.Comunicador;
 import Usuario.Cliente;
@@ -48,7 +68,6 @@ public class ClienteLogin extends AppCompatActivity implements View.OnClickListe
 
 
                 int numMesa = Integer.parseInt(mesa.getText().toString());
-                TextView resultado = (TextView)findViewById(R.id.resultado);
 
                 if (Comunicador.verificarConexion(getApplicationContext())){
 
@@ -58,8 +77,55 @@ public class ClienteLogin extends AppCompatActivity implements View.OnClickListe
                     nuevoRegistro.setContrasena((contrasena.getText()).toString());
                     nuevoRegistro.setNombre((nombre.getText()).toString());
 
-                    EnviarUsuario envio = new EnviarUsuario();
-                    envio.execute(nuevoRegistro);
+                    GsonBuilder builder = new GsonBuilder();
+                    Gson gson = builder.create();
+                    final String datosAEnviar = gson.toJson(nuevoRegistro);
+
+
+
+
+                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                    String URL = "http://posttestserver.com/post.php";
+
+
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.i("VOLLEY", response);
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("VOLLEY", error.toString());
+                            }
+                        }) {
+                            @Override
+                            public String getBodyContentType() {
+                                return  String.format("application/json; charset=utf-8");
+                            }
+
+                            @Override
+                            public byte[] getBody() throws AuthFailureError {
+                                try {
+                                    return datosAEnviar == null ? null : datosAEnviar.getBytes("utf-8");
+                                } catch (UnsupportedEncodingException uee) {
+                                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", datosAEnviar, "utf-8");
+                                    return null;
+                                }
+                            }
+
+                            @Override
+                            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                                String responseString = "";
+                                if (response != null) {
+                                    responseString = String.valueOf(response.statusCode);
+                                    // can get more details such as response.headers
+                                }
+                                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                            }
+                        };
+
+                        requestQueue.add(stringRequest);
 
                     Intent pasoCliente = new Intent(ClienteLogin.this, VistaChat.class);
                     pasoCliente.putExtra("NombreUsuario", (nombre.getText()).toString());
@@ -105,56 +171,6 @@ public class ClienteLogin extends AppCompatActivity implements View.OnClickListe
             Toast toast = Toast.makeText(getApplicationContext(),
                     "No se ha recibido datos del scaneo!", Toast.LENGTH_SHORT);
             toast.show();
-        }
-    }
-
-
-
-
-
-    private class EnviarUsuario extends AsyncTask<Cliente, Void, Boolean> {
-
-
-        @Override
-        protected Boolean doInBackground(Cliente... params) {
-            Cliente clienteNuevo = params[0];
-
-            GsonBuilder builder = new GsonBuilder();
-            Gson gson = builder.create();
-            String datosAEnviar = gson.toJson(clienteNuevo);
-
-            if (Comunicador.verificarConexion(getApplicationContext())){
-                try {
-                    Comunicador.POST("http://192.168.100.22:8080/WebServer/rest/MainCliente/addClienteCuenta", datosAEnviar);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            else {
-                isCancelled();
-            }
-            return true;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-        }
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if(result)
-                Toast.makeText(ClienteLogin.this, "Inicio de sesision terminado!",
-                        Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        protected void onCancelled() {
-            Toast.makeText(ClienteLogin.this, "No hay conexion!",
-                    Toast.LENGTH_SHORT).show();
         }
     }
 }
