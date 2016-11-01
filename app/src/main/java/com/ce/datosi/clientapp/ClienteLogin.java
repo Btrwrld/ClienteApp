@@ -3,6 +3,7 @@ package com.ce.datosi.clientapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -57,17 +58,15 @@ public class ClienteLogin extends AppCompatActivity implements View.OnClickListe
                     nuevoRegistro.setContrasena((contrasena.getText()).toString());
                     nuevoRegistro.setNombre((nombre.getText()).toString());
 
-                    GsonBuilder builder = new GsonBuilder();
-                    Gson gson = builder.create();
-                    String usuario = gson.toJson(nuevoRegistro);
-                    /*
-                    try {
-                        Comunicador.POST("http://192.168.100.22:8080/WebServer/rest/MainCliente/addClienteCuenta", usuario);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }*/
+                    EnviarUsuario envio = new EnviarUsuario();
+                    envio.execute(nuevoRegistro);
+
+                    Intent pasoCliente = new Intent(ClienteLogin.this, VistaChat.class);
+                    pasoCliente.putExtra("NombreUsuario", (nombre.getText()).toString());
+
                     Intent intent = new Intent(ClienteLogin.this, MenuPrincipal.class);
                     intent.putExtra("NombreUsuario", (nombre.getText()).toString());
+
                     startActivity(intent);
                     finish();
                 }
@@ -108,5 +107,56 @@ public class ClienteLogin extends AppCompatActivity implements View.OnClickListe
             toast.show();
         }
     }
+
+
+
+
+
+    private class EnviarUsuario extends AsyncTask<Cliente, Void, Boolean> {
+
+
+        @Override
+        protected Boolean doInBackground(Cliente... params) {
+            Cliente clienteNuevo = params[0];
+
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+            String datosAEnviar = gson.toJson(clienteNuevo);
+
+            if (Comunicador.verificarConexion(getApplicationContext())){
+                try {
+                    Comunicador.POST("http://192.168.100.22:8080/WebServer/rest/MainCliente/addClienteCuenta", datosAEnviar);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                isCancelled();
+            }
+            return true;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result)
+                Toast.makeText(ClienteLogin.this, "Inicio de sesision terminado!",
+                        Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected void onCancelled() {
+            Toast.makeText(ClienteLogin.this, "No hay conexion!",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
 }
+
 

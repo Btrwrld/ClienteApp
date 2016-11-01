@@ -31,6 +31,8 @@
         <activity android:name=".MenuPlatillos" />
         <activity android:name=".Calificar" />
         <activity android:name=".Pago" />
+        <activity android:name=".VistaChat" />
+        <activity android:name=".VerProgreso"></activity>
     </application>
 
 </manifest>

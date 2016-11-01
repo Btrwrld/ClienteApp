@@ -11,35 +11,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ce.datosi.clientapp.MenuPrincipal">
 
-    <ProgressBar
-        style="@android:style/Widget.Holo.ProgressBar.Large"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:id="@+id/pbProgresoOrden"
-        android:layout_alignEnd="@+id/txtprogresoOrden"
-        android:layout_alignParentBottom="true"
-        android:indeterminate="false" />
-
-    <TextView
-        android:text="Progreso de su orden:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/pbProgresoOrden"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="32dp"
-        android:id="@+id/txtprogresoOrden" />
-
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/ic_btn_speak_now"
         android:id="@+id/ibtnMIc"
-        android:layout_below="@+id/txtprogresoOrden"
         android:layout_alignParentBottom="true"
         android:onClick="onClickImgBtnHablar"
         android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/txtmic" />
+        android:layout_alignTop="@+id/txtprogresoOrden" />
 
     <TextView
         android:text="Bienvenido"
@@ -50,120 +30,7 @@
         android:id="@+id/txtBienvenida"
         android:textSize="18sp" />
 
-    <TextView
-        android:text="Hable para ordenar :"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtmic"
-        android:layout_alignBaseline="@+id/txtprogresoOrden"
-        android:layout_alignBottom="@+id/txtprogresoOrden"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/LinearLayout" />
 
-    <Button
-        android:text="Enviar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnenviar"
-        android:layout_marginBottom="11dp"
-        android:layout_above="@+id/txtmic"
-        android:layout_alignStart="@+id/btncalificar" />
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/btncalificar"
-        android:layout_alignBottom="@+id/btnenviar"
-        android:layout_below="@+id/btnordenar"
-        android:id="@+id/LinearLayout">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/msj11"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/msj10"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/msj9"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/msj8"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/msj7"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/msj6"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/msj5"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/msj4"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/msj3"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/msj2"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/msj1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/txtmsjChat"
-            android:imeOptions="actionDone"
-            android:hint="Sea parte del chat aqui" />
-    </LinearLayout>
 
     <TextView
         android:text="Usuario"
@@ -176,15 +43,6 @@
         android:layout_marginStart="18dp" />
 
     <Button
-        android:text="Pagar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnpagar"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/LinearLayout" />
-
-    <Button
         android:text="Menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -193,13 +51,28 @@
         android:layout_alignParentEnd="true" />
 
     <Button
+        android:text="Pagar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnpagar"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/pbProgresoOrden"
+        android:layout_marginStart="13dp" />
+
+    <Button
+        android:text="Chatear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnChatear"
+        android:layout_above="@+id/btnenviarCalificacion"
+        android:layout_alignParentEnd="true" />
+
+    <Button
         android:text="Calificar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btncalificar"
-        android:layout_marginBottom="15dp"
-        android:layout_above="@+id/btnpagar"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/btnordenar" />
+        android:id="@+id/btnenviarCalificacion"
+        android:layout_above="@+id/ibtnMIc"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

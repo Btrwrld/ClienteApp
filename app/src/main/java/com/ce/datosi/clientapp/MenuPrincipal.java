@@ -2,8 +2,8 @@ package com.ce.datosi.clientapp;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.speech.RecognizerIntent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,15 +13,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import Comunicacion.Comunicador;
 import Comunicacion.Contenedor;
-import Hillos.BarraProgreso;
-import Hillos.Chat;
 import Menu.Platillo;
+
+import static java.lang.Thread.sleep;
 
 
 public class MenuPrincipal extends AppCompatActivity {
@@ -30,8 +36,14 @@ public class MenuPrincipal extends AppCompatActivity {
     private static final int RECOGNIZE_SPEECH_ACTIVITY = 1;
 
     //CHAT
-    private EditText mensaje;
-    private Button enviar;
+    private Button chatear;
+
+    private Button pagar;
+    private Button calificar;
+    private Button ordenar;
+
+
+
 
 
     @Override
@@ -42,32 +54,12 @@ public class MenuPrincipal extends AppCompatActivity {
         TextView nombreUsuario = (TextView) findViewById(R.id.txtNombreUsuario);
         nombreUsuario.setText((String) getIntent().getExtras().getSerializable("NombreUsuario"));
 
-        mensaje = (EditText) findViewById(R.id.txtmsjChat);
-        enviar = (Button) findViewById(R.id.btnenviar);
+        chatear = (Button) findViewById(R.id.btnChatear);
+        pagar = (Button) findViewById(R.id.btnpagar);
+        calificar = (Button) findViewById(R.id.btnenviarCalificacion);
+        ordenar = (Button) (findViewById(R.id.btnordenar));
 
-        LinkedList<TextView> entradas = new LinkedList<TextView>();
 
-        entradas.addFirst((TextView) findViewById(R.id.msj11));
-        entradas.addFirst((TextView) findViewById(R.id.msj10));
-        entradas.addFirst((TextView) findViewById(R.id.msj9));
-        entradas.addFirst((TextView) findViewById(R.id.msj8));
-        entradas.addFirst((TextView) findViewById(R.id.msj7));
-        entradas.addFirst((TextView) findViewById(R.id.msj6));
-        entradas.addFirst((TextView) findViewById(R.id.msj5));
-        entradas.addFirst((TextView) findViewById(R.id.msj4));
-        entradas.addFirst((TextView) findViewById(R.id.msj3));
-        entradas.addFirst((TextView) findViewById(R.id.msj2));
-        entradas.addFirst((TextView) findViewById(R.id.msj1));
-        /*
-        Chat chat = new Chat();
-        chat.setEntradas(entradas);
-        chat.run();
-
-        BarraProgreso barraProgreso = new BarraProgreso();
-        barraProgreso.setProgressBar((ProgressBar) (findViewById(R.id.pbProgresoOrden)));
-        barraProgreso.run();*/
-
-        Button ordenar = (Button) (findViewById(R.id.btnordenar));
 
         ordenar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,11 +72,37 @@ public class MenuPrincipal extends AppCompatActivity {
 
         });
 
-        enviar.setOnClickListener(new View.OnClickListener() {
+
+        calificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //Hacer un post y get del comentario
+                Intent intent = new Intent(MenuPrincipal.this, Calificar.class);
+                startActivity(intent);
+                onPause();
+
+            }
+
+        });
+        chatear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MenuPrincipal.this, VistaChat.class);
+                startActivity(intent);
+                onPause();
+
+            }
+
+        });
+
+        pagar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MenuPrincipal.this, Pago.class);
+                startActivity(intent);
+                onPause();
 
             }
 
@@ -183,4 +201,80 @@ public class MenuPrincipal extends AppCompatActivity {
         return platillosPedidos;
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private class RealizarOrden extends AsyncTask<LinkedList<Platillo>, Void, Boolean> {
+
+
+        @Override
+        protected Boolean doInBackground(LinkedList<Platillo>... params) {
+            LinkedList<Platillo> platillosOrdenados = params[0];
+
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+            String datosAEnviar;
+
+            if (Comunicador.verificarConexion(getApplicationContext())) {
+                for (int i = 0; i < platillosOrdenados.size(); i++) {
+                    datosAEnviar = gson.toJson(platillosOrdenados.get(i));
+
+
+                    //AGREGAR DIRECCION CORRECTA
+                    try {
+                        Comunicador.POST("http://192.168.100.22:8080/WebServer/rest/MainCliente/addClienteCuenta", datosAEnviar);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            } else {
+                isCancelled();
+            }
+
+            return true;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result)
+                Toast.makeText(MenuPrincipal.this, "Orden realizada con exito!",
+                        Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected void onCancelled() {
+            Toast.makeText(MenuPrincipal.this, "No hay conexion!",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+
+
+
 }

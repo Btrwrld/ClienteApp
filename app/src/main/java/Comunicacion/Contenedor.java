@@ -14,6 +14,7 @@ public class Contenedor implements Runnable {
     private static LinkedList<String> chat = new  LinkedList<>();
     private static LinkedList<Pasos> pasos = new  LinkedList<>();
     private static LinkedList<Platillo> platillos = new LinkedList<>();
+    private static LinkedList<String> mensajes = new LinkedList<>();
 
     public static LinkedList<String> getChat(){
         return chat;
@@ -24,6 +25,9 @@ public class Contenedor implements Runnable {
 
     public static LinkedList<Platillo> getPlatillos(){
         return platillos;}
+
+    public static LinkedList<String> getMensajes(){
+        return mensajes;}
 
 
     @Override

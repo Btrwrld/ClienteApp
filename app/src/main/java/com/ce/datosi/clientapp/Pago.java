@@ -1,5 +1,7 @@
 package com.ce.datosi.clientapp;
 
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 
@@ -37,6 +40,7 @@ public class Pago extends AppCompatActivity {
 
 
         LinkedList<Integer> personas = new LinkedList<Integer>();
+        personas.addLast(1);
         personas.addLast(2);
         personas.addLast(3);
         personas.addLast(4);
@@ -59,18 +63,23 @@ public class Pago extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> parent,
                                                android.view.View v, int position, long id) {
                         numero = Integer.parseInt((parent.getItemAtPosition(position)).toString());
+                        total.setText("$" + (totalAPagar / numero));
                     }
 
                     public void onNothingSelected(AdapterView<?> parent) {
-                        numero = 1;
                     }
                 });
 
         pagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(Pago.this, "¡Pago procesado! Su pago fue cobrado por: $" + (totalAPagar / numero) +" . Muchas gracias por su visita.",
+                        Toast.LENGTH_SHORT).show();
 
-                total.setText(totalAPagar / numero);
+                Intent intent = new Intent(Pago.this, MenuPrincipal.class);
+                startActivity(intent);
+                finish();
+
             }
         });
     }

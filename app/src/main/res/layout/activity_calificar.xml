@@ -27,7 +27,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="13dp"
-        android:id="@+id/btncalificar" />
+        android:id="@+id/btnenviarCalificacion" />
 
     <RatingBar
         android:layout_width="wrap_content"
